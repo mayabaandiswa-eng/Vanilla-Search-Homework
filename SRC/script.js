@@ -33,5 +33,21 @@ function displayWeather (response) {
 }
 
 function searchCity(city) {
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${a3te02ob303fbf3720b84aa127ffc8b}&units=metric`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiUrl}&units=metric`;
+
+fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data)) => displayWeather(data))
+    .catch(() => alert ("City not found. Please try again."));
 }
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let city =
+    document.queryselector("#city-input").value;
+    searchCity(city);
+}
+
+document.queryselector("#search-form").addEventListener("submit, handleSubmit);
+
+searchCity("Paris");
