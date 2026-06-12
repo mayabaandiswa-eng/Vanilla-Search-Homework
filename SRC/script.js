@@ -1,53 +1,28 @@
-let apiKey = a3te02ob303fbf3720b84aa127ffc8b
+function refreshWeather(response) {
+  let temperatureElement = document.querySelector("#temperature");
+  let temperature = response.data.temperature.current;
+  let cityElement = document.querySelector("#city");
 
-function formatDate(date) {
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-    let day = days[date.getDay()];
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-
-    if (minutes < 10) {
-        minutes = `0${minutes}`;
-    }
-
-    return `${day} ${hours}:${minutes}`;
-}
-
-function displayWeather (response) {
-
-    document.querySelector("#city-name").innerHTML = response.name;
-
-    document.querySelector("#temperature").innerHTML = Math.round(response.main.temp);
-
-    document.querySelector("#description").innerHTML = response.weather[0].description;
-
-    document.querySelector("#humidity").innerHTML = response.main.humidity;
-
-    document.querySelector("#wind").innerHTML = response.wind.speed;
-
-    let iconCode = response.weather[0].icon; 
-    document.querySelector("#icon").src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-
-    document.querySelector("#date-time").innerHTML = formatDate(new Date());
+  cityElement.innerHTML = response.data.city;
+  temperatureElement.innerHTML = Math.round(temperature);
 }
 
 function searchCity(city) {
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiUrl}&units=metric`;
-
-fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data)) => displayWeather(data))
-    .catch(() => alert ("City not found. Please try again."));
+  let apiKey = "a3te02ob303fbf3720b84aa127ffc8b";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+  axios.get(apiUrl).then(refreshWeather);
 }
 
-function handleSubmit(event) {
-    event.preventDefault();
-    let city =
-    document.queryselector("#city-input").value;
-    searchCity(city);
+function handleSearchSubmit(event) {
+  event.preventDefault();
+  let searchInput = document.querySelector("#search-form-input");
+
+  searchCity(searchInput.value);
 }
 
-document.queryselector("#search-form").addEventListener("submit, handleSubmit);
+let searchFormElement = document.querySelector("#search-form");
+searchFormElement.addEventListener("submit", handleSearchSubmit);
+
+searchCity("Cape Town");
 
 searchCity("Paris");
