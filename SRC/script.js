@@ -25,4 +25,3 @@ searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Cape Town");
 
-searchCity("Paris");
